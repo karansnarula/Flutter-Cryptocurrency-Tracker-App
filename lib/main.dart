@@ -1,6 +1,9 @@
+import 'package:cryptocurrency_tracker/Data/data_extractor.dart';
+import 'package:cryptocurrency_tracker/Data/data_retriever.dart';
 import 'package:cryptocurrency_tracker/UI/screens/coin_list.dart';
 import 'package:cryptocurrency_tracker/UI/screens/coin_search.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,13 +14,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Simple Crypto',
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colors.blueGrey[900],
-        // cardColor: const Color(0xFF222222)
+    return Provider<DataExtractor>(
+      create: (context) => DataExtractor(dataRetriever: DataRetriever()),
+      child: MaterialApp(
+        title: 'Simple Crypto',
+        theme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: Colors.blueGrey[900],
+          // cardColor: const Color(0xFF222222)
+        ),
+        home: const _MainApp(),
       ),
-      home: const _MainApp(),
     );
   }
 }

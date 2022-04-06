@@ -1,5 +1,3 @@
-import 'package:cryptocurrency_tracker/Data/data_repository.dart';
-import 'package:cryptocurrency_tracker/Services/coin_gecko_api.dart';
 import 'package:flutter/material.dart';
 
 class CoinCard extends StatelessWidget {
@@ -11,7 +9,7 @@ class CoinCard extends StatelessWidget {
       padding: const EdgeInsets.all(15.0),
       child: Card(
         child: InkWell(
-          onTap: () => {printDataSample()},
+          onTap: () => {},
           splashColor: Colors.blueGrey,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -22,12 +20,14 @@ class CoinCard extends StatelessWidget {
     );
   }
 
-  void printDataSample() async {
-    CoinGeckoApi api;
-    DataRepository data;
-    api = CoinGeckoApi();
-    data = DataRepository(api);
-    var lst = await data.getCoinSearch(value: 'bit');
-    print(lst);
-  }
+  // Future<void> printDataSample() async {
+  //   DataRetriever data;
+  //   data = DataRetriever();
+  //   var lst = await data.getCoinMarketChart(coinId: 'bitcoin', days: 2);
+
+  //   DataExtractor data;
+  //   data = DataExtractor();
+  //   var lst = await data.getCoinChartList(coinId: 'bitcoin', days: 1);
+  //   print(lst[0].getTime);
+  // }
 }
