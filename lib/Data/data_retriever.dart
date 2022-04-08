@@ -3,9 +3,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class DataRetriever {
-  Future<List<dynamic>> getCoinList({required int page}) async {
-    final response =
-        await http.get(Uri.parse(CoinGeckoApi.coinList(page: page)));
+  Future<List<dynamic>> getCoinList(
+      {required int page, required int numberOfCoins}) async {
+    final response = await http.get(Uri.parse(
+        CoinGeckoApi.coinList(page: page, numberOfCoins: numberOfCoins)));
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       return data;

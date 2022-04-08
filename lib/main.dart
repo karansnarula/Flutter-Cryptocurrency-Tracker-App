@@ -19,9 +19,12 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Simple Crypto',
         theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: Colors.blueGrey[900],
-          // cardColor: const Color(0xFF222222)
-        ),
+            scaffoldBackgroundColor: Colors.blueGrey[900],
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.black87,
+            ),
+            bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+                backgroundColor: Colors.black87)),
         home: const _MainApp(),
       ),
     );
@@ -37,8 +40,7 @@ class _MainApp extends StatefulWidget {
 
 class _MainAppState extends State<_MainApp> {
   int _screenIndex = 0;
-  final _screenPages = const [CoinList(), CoinSearch()];
-  final _backgroundBarColor = Colors.black87;
+  final _screenPages = [CoinList(), const CoinSearch()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,13 +50,15 @@ class _MainAppState extends State<_MainApp> {
           'Simple Crypto',
           style: TextStyle(color: Colors.white70),
         ),
-        backgroundColor: _backgroundBarColor,
       ),
-      body: _screenPages.elementAt(_screenIndex),
+      //body: _screenPages.elementAt(_screenIndex),
+      body: IndexedStack(
+        index: _screenIndex,
+        children: _screenPages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTapped,
         currentIndex: _screenIndex,
-        backgroundColor: _backgroundBarColor,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.list_alt_rounded),
