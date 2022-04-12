@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class DataRetriever {
-  Future<List<dynamic>> getCoinList(
+  Future<List> getCoinList(
       {required int page, required int numberOfCoins}) async {
     final response = await http.get(Uri.parse(
         CoinGeckoApi.coinList(page: page, numberOfCoins: numberOfCoins)));
@@ -14,7 +14,7 @@ class DataRetriever {
     throw response;
   }
 
-  Future<List<dynamic>> getCoinSearch({required dynamic value}) async {
+  Future<List> getCoinSearch({required dynamic value}) async {
     final response =
         await http.get(Uri.parse(CoinGeckoApi.coinSearch(value: value)));
     if (response.statusCode == 200) {
@@ -24,7 +24,7 @@ class DataRetriever {
     throw response;
   }
 
-  Future<List<dynamic>> getCoinMarketChart(
+  Future<List> getCoinMarketChart(
       {required dynamic coinId, required int days}) async {
     final response = await http.get(
         Uri.parse(CoinGeckoApi.coinMarketChart(coinId: coinId, days: days)));

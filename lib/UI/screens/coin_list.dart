@@ -1,4 +1,5 @@
 import 'package:cryptocurrency_tracker/Data/data_extractor.dart';
+import 'package:cryptocurrency_tracker/Data/data_types.dart';
 import 'package:cryptocurrency_tracker/UI/widgets/coin_list_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

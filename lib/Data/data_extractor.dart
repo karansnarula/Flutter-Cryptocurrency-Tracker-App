@@ -1,4 +1,5 @@
 import 'package:cryptocurrency_tracker/Data/data_retriever.dart';
+import 'package:cryptocurrency_tracker/Data/data_types.dart';
 import 'package:intl/intl.dart';
 
 class DataExtractor {
@@ -42,31 +43,17 @@ class DataExtractor {
     }
     return finalList;
   }
-}
 
-class ListOfCoins {
-  final String coinId;
-  final String coinName;
-  final String coinSymbol;
-  final num coinPrice;
-  final String coinImageUrl;
-  ListOfCoins(
-      {required this.coinId,
-      required this.coinName,
-      required this.coinSymbol,
-      required this.coinPrice,
-      required this.coinImageUrl});
-  String get getCoinId => coinId;
-  String get getCoinName => coinName;
-  String get getCoinSymbol => coinSymbol;
-  num get getCoinPrice => coinPrice;
-  String get getCoinImageUrl => coinImageUrl;
-}
-
-class CoinChartData {
-  CoinChartData({required this.timeInterval, required this.price});
-  final String timeInterval;
-  final double price;
-  String get getTime => timeInterval;
-  double get getPrice => price;
+  Future<List> getCoinSearch({required dynamic value}) async {
+    var finalList = <SearchCoin>[];
+    var searchList = await dataRetriever.getCoinSearch(value: value);
+    for (var element in searchList) {
+      finalList.add(SearchCoin(
+          coinId: element['id'],
+          coinName: element['name'],
+          coinSymbol: element['symbol'],
+          coinImageUrl: element['large']));
+    }
+    return finalList;
+  }
 }

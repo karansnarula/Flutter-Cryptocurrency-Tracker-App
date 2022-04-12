@@ -17,9 +17,9 @@ class CoinGeckoApi {
     return url;
   }
 
-  static String coinInformation({required dynamic coinId}) {
-    String url =
-        'https://api.coingecko.com/api/v3/coins/${coinId.toString()}?localization=en&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false';
-    return url;
-  }
+  // static String coinInformation({required dynamic coinId}) {
+  //   String url =
+  //       'https://api.coingecko.com/api/v3/coins/${coinId.toString()}?localization=en&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false';
+  //   return url;
+  // }
 }
