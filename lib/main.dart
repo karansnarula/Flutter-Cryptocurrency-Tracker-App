@@ -43,33 +43,36 @@ class _MainAppState extends State<_MainApp> {
   final _screenPages = [CoinList(), const CoinSearch()];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'Simple Crypto',
-          style: TextStyle(color: Colors.white70),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            'Simple Crypto',
+            style: TextStyle(color: Colors.white70),
+          ),
         ),
-      ),
-      //body: _screenPages.elementAt(_screenIndex),
-      body: IndexedStack(
-        index: _screenIndex,
-        children: _screenPages,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _onItemTapped,
-        currentIndex: _screenIndex,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt_rounded),
-            label: 'Coin List',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Coin Search',
-          ),
-        ],
+        //body: _screenPages.elementAt(_screenIndex),
+        body: IndexedStack(
+          index: _screenIndex,
+          children: _screenPages,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: _onItemTapped,
+          currentIndex: _screenIndex,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list_alt_rounded),
+              label: 'Coin List',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Coin Search',
+            ),
+          ],
+        ),
       ),
     );
   }

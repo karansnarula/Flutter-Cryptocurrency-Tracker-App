@@ -1,4 +1,5 @@
 import 'package:cryptocurrency_tracker/Data/data_types.dart';
+import 'package:cryptocurrency_tracker/UI/screens/coin_information.dart';
 import 'package:flutter/material.dart';
 
 class CoinSearchCard extends StatelessWidget {
@@ -9,7 +10,19 @@ class CoinSearchCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => CoinInformation(
+                    coinId: searchCoin.getCoinId,
+                    coinImage: Image.network(
+                      // Coin Image
+                      searchCoin.getCoinImageUrl,
+                      width: 20.0,
+                      height: 20.0,
+                    ),
+                    coinName: searchCoin.getCoinName,
+                  )));
+        },
         splashColor: Colors.blueGrey,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -27,7 +40,12 @@ class CoinSearchCard extends StatelessWidget {
                   Padding(
                     // Coin Symbol
                     padding: const EdgeInsets.only(top: 3.0),
-                    child: Text(searchCoin.getCoinSymbol.toUpperCase()),
+                    child: Text(
+                      searchCoin.getCoinSymbol.toUpperCase(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -35,7 +53,10 @@ class CoinSearchCard extends StatelessWidget {
             Text(
               //Coin Name
               searchCoin.getCoinName,
-              softWrap: false,
+              style: TextStyle(
+                fontSize: searchCoin.getCoinName.length < 32 ? 15 : 10,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(
               width: 20,

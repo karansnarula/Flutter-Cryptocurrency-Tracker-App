@@ -56,4 +56,9 @@ class DataExtractor {
     }
     return finalList;
   }
+
+  Future<PriceOfCoin> getCoinPrice({required dynamic coinId}) async {
+    num coinPrice = await dataRetriever.getCoinPrice(coinId: coinId);
+    return PriceOfCoin(coinPrice: coinPrice);
+  }
 }

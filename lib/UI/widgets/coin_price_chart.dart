@@ -28,8 +28,7 @@ class _CoinPriceChartState extends State<CoinPriceChart> {
   @override
   Widget build(BuildContext context) {
     if (!_isloading) {
-      return Container(
-          child: SfCartesianChart(
+      return SfCartesianChart(
         primaryXAxis: CategoryAxis(
           majorGridLines: const MajorGridLines(width: 0),
           labelStyle: const TextStyle(fontSize: 7),
@@ -49,7 +48,7 @@ class _CoinPriceChartState extends State<CoinPriceChart> {
                 : Colors.greenAccent,
           )
         ],
-      ));
+      );
     } else {
       return const Center(
         child: CircularProgressIndicator.adaptive(),

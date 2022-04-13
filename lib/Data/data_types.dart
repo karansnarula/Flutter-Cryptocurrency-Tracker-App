@@ -40,3 +40,9 @@ class SearchCoin {
   String get getCoinSymbol => coinSymbol;
   String get getCoinImageUrl => coinImageUrl;
 }
+
+class PriceOfCoin {
+  final num coinPrice;
+  PriceOfCoin({required this.coinPrice});
+  num get getCoinPrice => coinPrice;
+}

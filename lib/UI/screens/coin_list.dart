@@ -36,17 +36,25 @@ class _CoinListState extends State<CoinList> {
   @override
   Widget build(BuildContext context) {
     if (!_isLoading && _hasMore) {
-      return ListView.builder(
-          controller: _controller,
-          itemCount: _coinList.length + 1,
-          itemBuilder: (context, index) {
-            if (index < _coinList.length) {
-              return CoinListCard(
-                  coinRank: index + 1, coinList: _coinList[index]);
-            } else {
-              return const Center(child: CircularProgressIndicator.adaptive());
-            }
-          });
+      return RefreshIndicator(
+        onRefresh: (() {
+          _page = 1;
+          _coinList.clear();
+          return _getCoinList(page: _page, numberOfCoins: _numberOfCoins);
+        }),
+        child: ListView.builder(
+            controller: _controller,
+            itemCount: _coinList.length + 1,
+            itemBuilder: (context, index) {
+              if (index < _coinList.length) {
+                return CoinListCard(
+                    coinRank: index + 1, coinList: _coinList[index]);
+              } else {
+                return const Center(
+                    child: CircularProgressIndicator.adaptive());
+              }
+            }),
+      );
     } else {
       return Center(
           child: _hasMore

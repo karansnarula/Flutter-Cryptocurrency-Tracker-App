@@ -42,7 +42,21 @@ class _CoinSearchState extends State<CoinSearch> {
         Expanded(
           child: _value != ''
               ? _showSearchResult(value: _value)
-              : const Icon(Icons.search),
+              : Center(
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.search_rounded,
+                        color: Colors.grey[400],
+                        size: 100,
+                      ),
+                      Text(
+                        'Search coin...',
+                        style: TextStyle(color: Colors.grey[400]),
+                      )
+                    ],
+                  ),
+                ),
         ),
       ],
     );
@@ -71,6 +85,7 @@ class _CoinSearchState extends State<CoinSearch> {
                 );
               }),
               scrollDirection: Axis.vertical,
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               shrinkWrap: true,
             );
           }
