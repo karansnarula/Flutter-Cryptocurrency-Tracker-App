@@ -1,16 +1,16 @@
-import 'package:cryptocurrency_tracker/Data/data_retriever.dart';
+import 'package:cryptocurrency_tracker/Data/raw_data.dart';
 import 'package:cryptocurrency_tracker/Data/data_types.dart';
 import 'package:intl/intl.dart';
 
-class DataExtractor {
-  DataRetriever dataRetriever;
-  DataExtractor({required this.dataRetriever});
+class ModifiedData {
+  RawData rawData;
+  ModifiedData({required this.rawData});
 
   Future<List> getCoinChartList(
       {required dynamic coinId, required int days}) async {
     var finalList = <CoinChartData>[];
     var pricesList =
-        await dataRetriever.getCoinMarketChart(coinId: coinId, days: days);
+        await rawData.getCoinMarketChart(coinId: coinId, days: days);
     var dateFormat = DateFormat('kk:mm');
     if (days > 1 && days <= 90) {
       dateFormat = DateFormat('dd/MM kk:mm');
@@ -31,8 +31,8 @@ class DataExtractor {
   Future<List> getListOfCoins(
       {required int page, required int numberOfCoins}) async {
     var finalList = <ListOfCoins>[];
-    var coinList = await dataRetriever.getCoinList(
-        page: page, numberOfCoins: numberOfCoins);
+    var coinList =
+        await rawData.getCoinList(page: page, numberOfCoins: numberOfCoins);
     for (var element in coinList) {
       finalList.add(ListOfCoins(
           coinId: element["id"],
@@ -46,7 +46,7 @@ class DataExtractor {
 
   Future<List> getCoinSearch({required dynamic value}) async {
     var finalList = <SearchCoin>[];
-    var searchList = await dataRetriever.getCoinSearch(value: value);
+    var searchList = await rawData.getCoinSearch(value: value);
     for (var element in searchList) {
       finalList.add(SearchCoin(
           coinId: element['id'],
@@ -58,7 +58,7 @@ class DataExtractor {
   }
 
   Future<PriceOfCoin> getCoinPrice({required dynamic coinId}) async {
-    num coinPrice = await dataRetriever.getCoinPrice(coinId: coinId);
+    num coinPrice = await rawData.getCoinPrice(coinId: coinId);
     return PriceOfCoin(coinPrice: coinPrice);
   }
 }

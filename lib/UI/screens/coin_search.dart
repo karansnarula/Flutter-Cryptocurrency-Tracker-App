@@ -1,4 +1,4 @@
-import 'package:cryptocurrency_tracker/Data/data_extractor.dart';
+import 'package:cryptocurrency_tracker/Data/modified_data.dart';
 import 'package:cryptocurrency_tracker/Data/data_types.dart';
 import 'package:cryptocurrency_tracker/UI/widgets/coin_search_card.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +93,7 @@ class _CoinSearchState extends State<CoinSearch> {
   }
 
   Future<List> _getSearchResult({required dynamic value}) async {
-    DataExtractor data = Provider.of<DataExtractor>(context, listen: false);
+    ModifiedData data = Provider.of<ModifiedData>(context, listen: false);
     List<SearchCoin> resultList =
         await data.getCoinSearch(value: value) as List<SearchCoin>;
     return resultList;

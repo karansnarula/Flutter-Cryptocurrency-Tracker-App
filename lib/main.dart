@@ -1,5 +1,5 @@
-import 'package:cryptocurrency_tracker/Data/data_extractor.dart';
-import 'package:cryptocurrency_tracker/Data/data_retriever.dart';
+import 'package:cryptocurrency_tracker/Data/modified_data.dart';
+import 'package:cryptocurrency_tracker/Data/raw_data.dart';
 import 'package:cryptocurrency_tracker/UI/screens/coin_list.dart';
 import 'package:cryptocurrency_tracker/UI/screens/coin_search.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<DataExtractor>(
-      create: (context) => DataExtractor(dataRetriever: DataRetriever()),
+    return Provider<ModifiedData>(
+      create: (context) => ModifiedData(rawData: RawData()),
       child: MaterialApp(
         title: 'Simple Crypto',
         theme: ThemeData.dark().copyWith(

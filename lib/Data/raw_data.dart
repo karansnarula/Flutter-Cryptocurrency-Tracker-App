@@ -2,7 +2,7 @@ import 'package:cryptocurrency_tracker/Services/coin_gecko_api.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class DataRetriever {
+class RawData {
   Future<List> getCoinList(
       {required int page, required int numberOfCoins}) async {
     final response = await http.get(Uri.parse(

@@ -1,4 +1,4 @@
-import 'package:cryptocurrency_tracker/Data/data_extractor.dart';
+import 'package:cryptocurrency_tracker/Data/modified_data.dart';
 import 'package:cryptocurrency_tracker/Data/data_types.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -16,9 +16,6 @@ class CoinPriceChart extends StatefulWidget {
 }
 
 class _CoinPriceChartState extends State<CoinPriceChart> {
-  bool _isloading = true;
-  late List<CoinChartData> _priceChart;
-
   @override
   void initState() {
     super.initState();
@@ -27,41 +24,49 @@ class _CoinPriceChartState extends State<CoinPriceChart> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_isloading) {
-      return SfCartesianChart(
-        primaryXAxis: CategoryAxis(
-          majorGridLines: const MajorGridLines(width: 0),
-          labelStyle: const TextStyle(fontSize: 7),
-        ),
-        primaryYAxis: NumericAxis(
-            rangePadding: ChartRangePadding.round,
-            numberFormat: NumberFormat.compactCurrency(symbol: '\$'),
-            labelStyle: const TextStyle(fontSize: 10)),
-        series: <ChartSeries>[
-          LineSeries<CoinChartData, String>(
-            dataSource: _priceChart,
-            xValueMapper: (CoinChartData data, _) => data.getTime,
-            yValueMapper: (CoinChartData data, _) => data.getPrice,
-            color: _priceChart[0].getPrice >
-                    _priceChart[_priceChart.length - 1].getPrice
-                ? Colors.redAccent
-                : Colors.greenAccent,
-          )
-        ],
-      );
-    } else {
-      return const Center(
-        child: CircularProgressIndicator.adaptive(),
-      );
-    }
+    return FutureBuilder(
+      future: _getPriceData(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator.adaptive());
+        }
+        if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        } else {
+          return SfCartesianChart(
+            primaryXAxis: CategoryAxis(
+              majorGridLines: const MajorGridLines(width: 0),
+              labelStyle: const TextStyle(fontSize: 7),
+            ),
+            primaryYAxis: NumericAxis(
+                rangePadding: ChartRangePadding.round,
+                numberFormat: NumberFormat.compactCurrency(symbol: '\$'),
+                labelStyle: const TextStyle(fontSize: 10)),
+            series: <ChartSeries>[
+              LineSeries<CoinChartData, String>(
+                dataSource: snapshot.data,
+                xValueMapper: (CoinChartData data, _) => data.getTime,
+                yValueMapper: (CoinChartData data, _) => data.getPrice,
+                color: snapshot.data[0].getPrice >
+                        snapshot.data[snapshot.data.length - 1].getPrice
+                    ? Colors.redAccent
+                    : Colors.greenAccent,
+              )
+            ],
+          );
+        }
+      },
+    );
   }
 
-  Future<void> _getPriceData() async {
-    DataExtractor data = Provider.of<DataExtractor>(context, listen: false);
-    _priceChart = await data.getCoinChartList(
+  void refreshChart() {
+    setState(() {});
+  }
+
+  Future<List> _getPriceData() async {
+    ModifiedData data = Provider.of<ModifiedData>(context, listen: false);
+    List<CoinChartData> _priceChart = await data.getCoinChartList(
         coinId: widget.coinId, days: widget.days) as List<CoinChartData>;
-    setState(() {
-      _isloading = false;
-    });
+    return _priceChart;
   }
 }

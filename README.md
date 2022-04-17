@@ -1,10 +1,10 @@
-# cryptocurrency_tracker
+# Cryptocurrency_tracker
 
 A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Minimalistic cryptocurrency price viewer from API courtesy of CoinGecko https://www.coingecko.com/en/api
 
 A few resources to get you started if this is your first Flutter project:
 
