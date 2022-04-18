@@ -35,13 +35,12 @@ class RawData {
     throw response.toString();
   }
 
-  Future<num> getCoinPrice({required dynamic coinId}) async {
+  Future<Map> getCoinInformation({required dynamic coinId}) async {
     final response =
-        await http.get(Uri.parse(CoinGeckoApi.coinPrice(coinId: coinId)));
+        await http.get(Uri.parse(CoinGeckoApi.coinInformation(coinId: coinId)));
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
-      return data
-          .values.first.values.first; // response = {coinId: {usd : $xxxx}}
+      return data.values.first;
     }
     throw response.toString();
   }

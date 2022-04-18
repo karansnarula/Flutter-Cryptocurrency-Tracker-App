@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
             ),
             bottomNavigationBarTheme: const BottomNavigationBarThemeData(
                 backgroundColor: Colors.black87)),
+        debugShowCheckedModeBanner: false,
         home: const _MainApp(),
       ),
     );
@@ -40,7 +41,7 @@ class _MainApp extends StatefulWidget {
 
 class _MainAppState extends State<_MainApp> {
   int _screenIndex = 0;
-  final _screenPages = [CoinList(), const CoinSearch()];
+  final _screenPages = const [CoinList(), CoinSearch()];
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

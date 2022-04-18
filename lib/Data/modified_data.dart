@@ -34,12 +34,17 @@ class ModifiedData {
     var coinList =
         await rawData.getCoinList(page: page, numberOfCoins: numberOfCoins);
     for (var element in coinList) {
+      var sparklineList = element["sparkline_in_7d"] as Map;
       finalList.add(ListOfCoins(
           coinId: element["id"],
           coinName: element["name"],
           coinSymbol: element["symbol"],
           coinPrice: element["current_price"],
-          coinImageUrl: element["image"]));
+          coinImageUrl: element["image"],
+          coinSparkline: sparklineList.values.first
+              .sublist(sparklineList.values.first.length - 24)
+              .cast<
+                  double>())); //"sparkline_in_7d": { "price": [ 42304.11322779421, 42242.45036782667, ....] |  Get only the latest 24 hours
     }
     return finalList;
   }
@@ -57,8 +62,13 @@ class ModifiedData {
     return finalList;
   }
 
-  Future<PriceOfCoin> getCoinPrice({required dynamic coinId}) async {
-    num coinPrice = await rawData.getCoinPrice(coinId: coinId);
-    return PriceOfCoin(coinPrice: coinPrice);
+  Future<InformationOfCoin> getCoinInformation(
+      {required dynamic coinId}) async {
+    var coinInformation = await rawData.getCoinInformation(coinId: coinId);
+    return InformationOfCoin(
+        marketCap: coinInformation["usd_market_cap"],
+        dailyVolume: coinInformation["usd_24h_vol"],
+        dailyChange: coinInformation["usd_24h_change"],
+        coinPrice: coinInformation["usd"]);
   }
 }

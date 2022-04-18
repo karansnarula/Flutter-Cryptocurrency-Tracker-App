@@ -1,6 +1,8 @@
+import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:cryptocurrency_tracker/Data/data_types.dart';
 import 'package:cryptocurrency_tracker/UI/screens/coin_information.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CoinListCard extends StatelessWidget {
   final ListOfCoins coinList;
@@ -21,8 +23,8 @@ class CoinListCard extends StatelessWidget {
                       coinImage: Image.network(
                         // Coin Image
                         coinList.getCoinImageUrl,
-                        width: 20.0,
-                        height: 20.0,
+                        width: 25.0,
+                        height: 25.0,
                       ),
                       coinName: coinList.getCoinName,
                     )))
@@ -77,23 +79,45 @@ class CoinListCard extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Text(
-                //Coin Name
-                coinList.getCoinName.length <= 15
-                    ? coinList.getCoinName
-                    : coinList.getCoinName.substring(0, 16) + "...",
-                softWrap: false,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
+              Column(
+                children: [
+                  Text(
+                    //Coin Name
+                    coinList.getCoinName.length <= 15
+                        ? coinList.getCoinName
+                        : coinList.getCoinName.substring(0, 16) + "...",
+                    softWrap: false,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                    width: 60,
+                  ),
+                  SizedBox(
+                    height: 30,
+                    width: 60,
+                    child: Sparkline(
+                      data: coinList.getCoinSparkline,
+                      useCubicSmoothing: true,
+                      cubicSmoothingFactor: 0.3,
+                      lineColor: coinList.getCoinSparkline[0] >
+                              coinList.getCoinSparkline[
+                                  coinList.getCoinSparkline.length - 1]
+                          ? Colors.redAccent
+                          : Colors.greenAccent,
+                    ),
+                  ),
+                ],
               ),
               const Spacer(),
               Padding(
                 // Coin Price
                 padding: const EdgeInsets.only(right: 8.0),
                 child: Text(
-                  '\$${coinList.getCoinPrice.toString()}',
+                  formattedPrice(coinList.getCoinPrice),
                   style: TextStyle(
                     fontSize: coinList.getCoinPrice < 0.000001 ? 12 : 15,
                     fontWeight: FontWeight.bold,
@@ -105,5 +129,11 @@ class CoinListCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String formattedPrice(num price) {
+    var formattedPrice = NumberFormat.simpleCurrency(
+        locale: 'en_US', name: 'USD', decimalDigits: price < 0.0001 ? 10 : 2);
+    return formattedPrice.format(price).toString();
   }
 }

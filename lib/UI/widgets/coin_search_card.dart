@@ -17,8 +17,8 @@ class CoinSearchCard extends StatelessWidget {
                     coinImage: Image.network(
                       // Coin Image
                       searchCoin.getCoinImageUrl,
-                      width: 20.0,
-                      height: 20.0,
+                      width: 25.0,
+                      height: 25.0,
                     ),
                     coinName: searchCoin.getCoinName,
                   )));
